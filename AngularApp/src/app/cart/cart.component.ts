@@ -1,3 +1,4 @@
+import { DataService } from "./../data.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -6,13 +7,17 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./cart.component.scss"],
 })
 export class CartComponent implements OnInit {
-  items = ["Milk", "Bread", "Cheese"];
+  items = [];
 
-  constructor() {}
+  constructor(private dataService: DataService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.dataService.getItems().subscribe((res: any) => {
+      this.items = res;
+    });
+  }
 
   deleted(deletedItem: any) {
-    this.items = this.items.filter((item) => item !== deletedItem);
+    this.items = this.items.filter((item: any) => item !== deletedItem);
   }
 }
